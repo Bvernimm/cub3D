@@ -1,0 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: llaruell <llaruell@student.s19.be>         +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/03 07:50:45 by llaruell          #+#    #+#             */
+/*   Updated: 2023/01/03 07:50:45 by llaruell         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "cub3d.h"
+
+void	launch_game(t_game game)
+{
+	mlx_hook(game.win.mlx_ptr, MLX_KEY_PRESS, 1L << 0, &key_pressed, &game);
+	mlx_hook(game.win.mlx_ptr, MLX_KEY_RELEASE, 1L << 1, &key_released, &game);
+	mlx_hook(game.win.mlx_ptr, MLX_DESTROY_NOTIF, 0L, &exit_game, &game);
+	mlx_loop_hook(game.mlx, loop, &game);
+	mlx_loop(game.mlx);
+}
+
+int	main(int argc, char **argv)
+{
+	t_game	game;
+
+	parsing(argc, argv, &game);
+	launch_game(game);
+}
